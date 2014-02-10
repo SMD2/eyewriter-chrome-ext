@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+begin
+
+<iframe id="site_view" width="100%" height="80%"> </iframe>
+
+end
+
+
+<script>
+document.getElementById("site_view").src=getURLParameter("site_url");
+
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+
+  "name": "eyeWrtierCE",
+  "description": "eyeWriter extension",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "background": {
+	"scripts": ["background.js"]
+  },
+  "web_accessible_resources": [
+  "header.html",
+  "mnu.html",
+  "mnu_main.html",
+  "images/icon.png",
+  "balloons/js/prototype.js",
+  "balloons/js/balloon.config.js",
+  "balloons/js/balloon.js",
+  "balloons/js/box.js",
+  "mnu_scripts.js"
+  ],
+  "permissions": [
+    "background",
+	"tabs",
+	"webRequest",
+	"storage",
+	"webRequestBlocking",
+	"http://*/*",
+	"https://*/*"
+  ]
+}
