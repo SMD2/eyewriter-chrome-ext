@@ -1,9 +1,25 @@
-<script>(function(){document.getElementById("mnu_img1").setAttribute("src",chrome.extension.getURL('images/icon.png'));})();
+<script>
+	//This code will be executed by morph.js (Ref ln 35)
+	(load_images)();
+	(setListeners)();
+	(load_favorits)();
+	
+	//End
+	function setListeners(){
+		document.getElementById("btn_fav").onmouseover=function(){myMouseOver(this, show_menue, 'mnu_fav')};
+		document.getElementById("btn_fav").onmouseout = function(){myMouseOut(this)};
+		document.getElementById("btn_add_to_fav").onmouseover=function(){myMouseOver(this, add_to_favorits, 'fav1')};
+		document.getElementById("btn_add_to_fav").onmouseout = function(){myMouseOut(this)};
+	}
 
+	function load_images(){
+		document.getElementById("mnu_img1").setAttribute("src",chrome.extension.getURL('images/icon.png'));
+		document.getElementById("img_add_fav").setAttribute("src",chrome.extension.getURL('images/plus.png'));
+	}
 </script>
 <table>
-	<tr></td>
-			<span onmouseover="anchMouseOver(this,event);" onmouseout="anchMouseOut(this);" style="position: fixed;
+	<tr><td>
+			<span id="btn_fav" style="position: fixed;
 					top: 10px;
 					z-index: 1000000;
 					opacity: 0.9;
@@ -11,8 +27,21 @@
 						>
 				<img src="" id="mnu_img1" width="100" height="100">
 			</span>
-	</td></tr>
-	<tr><td>
-	
-	
+	</td>
+	<td id="mnu_fav" style="display: none;">
+			<span style="position: fixed;
+					top: 10px;
+					opacity: 0.9;
+					left: 144px;
+					width: 100%;
+					height: 100%;
+					background: black;
+					z-index:1000000;"
+					>
+				<p  id="btn_add_to_fav">
+					<img src="" id="img_add_fav"  width="100" height="100">
+				</p>
+			</span>
+	</td>
+	</tr>
 </table>

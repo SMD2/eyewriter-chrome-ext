@@ -18,8 +18,6 @@ function load(e){
 	});
 }
 
-
-
 chrome.browserAction.onClicked.addListener(click);
 chrome.tabs.onUpdated.addListener(load);
 

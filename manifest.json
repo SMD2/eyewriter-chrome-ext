@@ -14,12 +14,7 @@
   "web_accessible_resources": [
   "header.html",
   "mnu.html",
-  "mnu_main.html",
-  "images/icon.png",
-  "balloons/js/prototype.js",
-  "balloons/js/balloon.config.js",
-  "balloons/js/balloon.js",
-  "balloons/js/box.js",
+  "images/*",
   "mnu_scripts.js"
   ],
   "permissions": [
