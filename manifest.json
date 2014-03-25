@@ -15,11 +15,12 @@
   "header.html",
   "mnu.html",
   "images/*",
-  "mnu_scripts.js"
+  "style.css"
   ],
   "permissions": [
     "background",
 	"tabs",
+	"tts",
 	"webRequest",
 	"storage",
 	"webRequestBlocking",

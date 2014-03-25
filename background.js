@@ -5,7 +5,7 @@ function click(e){
 		console.log("background.js :: click()");
 	});
 }
-function load(e){
+function load(tabId,  changeInfo, tab) {
 	chrome.tabs.query({currentWindow:true, active:true}, function(tabs){
 		var specTab = tabs[0];
 		var url = specTab.url;
@@ -15,7 +15,21 @@ function load(e){
 			chrome.tabs.executeScript(specTab.id, { file: "morph.js" });
 			//chrome.tabs.executeScript(specTab.id, {code:"bgd();"});
 		}
-	});
+	});          
+}
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+	say(request);
+    if (request.greeting == "hello")
+      sendResponse({farewell: "goodbye"});
+  });
+
+function say(text){
+	chrome.tts.speak(text);	
 }
 
 chrome.browserAction.onClicked.addListener(click);

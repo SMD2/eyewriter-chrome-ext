@@ -1,47 +1,101 @@
-<script>
-	//This code will be executed by morph.js (Ref ln 35)
-	(load_images)();
-	(setListeners)();
-	(load_favorits)();
-	
-	//End
-	function setListeners(){
-		document.getElementById("btn_fav").onmouseover=function(){myMouseOver(this, show_menue, 'mnu_fav')};
-		document.getElementById("btn_fav").onmouseout = function(){myMouseOut(this)};
-		document.getElementById("btn_add_to_fav").onmouseover=function(){myMouseOver(this, add_to_favorits, 'fav1')};
-		document.getElementById("btn_add_to_fav").onmouseout = function(){myMouseOut(this)};
-	}
 
-	function load_images(){
-		document.getElementById("mnu_img1").setAttribute("src",chrome.extension.getURL('images/icon.png'));
-		document.getElementById("img_add_fav").setAttribute("src",chrome.extension.getURL('images/plus.png'));
-	}
-</script>
-<table>
-	<tr><td>
-			<span id="btn_fav" style="position: fixed;
-					top: 10px;
-					z-index: 1000000;
-					opacity: 0.9;
-					left: 45px;"
-						>
-				<img src="" id="mnu_img1" width="100" height="100">
-			</span>
-	</td>
-	<td id="mnu_fav" style="display: none;">
-			<span style="position: fixed;
-					top: 10px;
-					opacity: 0.9;
-					left: 144px;
-					width: 100%;
-					height: 100%;
-					background: black;
-					z-index:1000000;"
-					>
-				<p  id="btn_add_to_fav">
-					<img src="" id="img_add_fav"  width="100" height="100">
-				</p>
-			</span>
-	</td>
+<table id="ewMenuTable">
+	<tr>
+		<td>
+			<a id="anchorFavMenu" class="ew-ext-internals"> 
+				<img class="ewExtImg ew-mnu-btn" id="btn_fav" extSrc="/images/favori.png"/>
+			</a>
+		</td>
+		<td>
+			<a id="anchorAddFav" class="ew-ext-internals">
+				<img class="ewExtImg ew-mnu-btn" id="btn_comm" extSrc="/images/baloon.png"/>
+			</a>
+		</td>
+		<td>
+			<a id="anchorScrollDown" class="ew-ext-internals">
+				<img id="btn_scr_down" class="ewExtImg ew-mnu-btn" extSrc="/images/arrow_down.png"/>
+			</a>
+		</td>
+		<td>
+			<a id="anchorScrollUp" class="ew-ext-internals">
+				<img id="btn_scr_up" class="ewExtImg ew-mnu-btn" extSrc="/images/arrow_up.png"/>
+			</a>
+		</td>
+		<td>
+			<input type="text" id="input_url" />
+		</td>
+		<td>
+			<a id="anchorLoadUrl" class="ew-ext-internals">
+				<img  id="btn_load_url" class="ewExtImg ew-mnu-btn" extSrc="/images/enter.png"/>
+			</a>
+		</td>
+		<td>
+			<a id="anchorRefresh" class="ew-ext-internals">
+				<img  id="btn_refresh" class="ewExtImg ew-mnu-btn" extSrc="/images/refresh.png"/>
+			</a>
+		</td>
+		<td>
+			<a id="anchorBack" class="ew-ext-internals">
+				<img id="btn_back" class="ewExtImg ew-mnu-btn" extSrc="/images/arrow_left.png"/>
+			</a>
+		</td>
+		<td>
+			<a id="anchorForward" class="ew-ext-internals">
+				<img id="btn_forward" class="ewExtImg ew-mnu-btn" extSrc="/images/arrow_right.png"/>
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td id="mnu_comm" style="display: none;" class="ew_mnu">
+				<table id="communication_table" class="ew_mnu_container">			
+				</table>
+		</td>
+		<td id="mnu_fav" style="display: none;" class="ew_mnu">
+				<table id="favorites_table" class="ew_mnu_container">			
+				</table>
+		</td>
 	</tr>
 </table>
+
+<script>
+	(setImages)();
+	(updateUrl)();
+	(setListeners)();
+
+	function setListeners() 
+	{
+		document.getElementById("btn_fav").onmouseover = function(){myMouseOver(this, show_menue, 'mnu_fav'); };
+		document.getElementById("btn_fav").onmouseout = function() { myMouseOut(this); };
+		document.getElementById("btn_comm").onmouseover = function(){myMouseOver(this, show_menue, 'mnu_comm');};
+		document.getElementById("btn_comm").onmouseout = function(){myMouseOut(this); };
+		document.getElementById("btn_back").onmouseover =	function() {myMouseOver(this, function () {window.history.back();}); };
+		document.getElementById("btn_back").onmouseout = function(){myMouseOut(this); };
+	    document.getElementById("btn_forward").onmouseover = function() {	myMouseOver(this, function () {window.history.forward(); }); };
+		document.getElementById("btn_forward").onmouseout = function(){myMouseOut(this); };
+	    document.getElementById("btn_refresh").onmouseover = function() {	myMouseOver(this, function () {location.reload(); }); };
+		document.getElementById("btn_refresh").onmouseout = function(){myMouseOut(this); };
+	    document.getElementById("btn_scr_down").onmouseover = function() { myMouseOver(this, startScroll, 10); };
+		document.getElementById("btn_scr_down").onmouseout = function(){ stopScroll(this); };
+	    document.getElementById("btn_scr_up").onmouseover =	function() { myMouseOver(this, startScroll, -10); };
+		document.getElementById("btn_scr_up").onmouseout = function(){ stopScroll(this); };
+		document.getElementById("input_url").onmouseover = function () {myMouseOver(this, setFocus, this);};
+		document.getElementById("input_url").onmouseout = function () {myMouseOut(this);};
+		document.getElementById("btn_load_url").onmouseover = function() { myMouseOver(this, loadURL, document.getElementById("input_url").value) };
+		document.getElementById("btn_load_url").onmouseout = function(){ myMouseOut(this); };
+	}
+	
+	
+	function setImages(){
+		var extImages = document.getElementsByClassName("ewExtImg");
+		for (var i = 0; i < extImages.length; i++) {
+			var oldUrl = extImages[i].getAttribute("extSrc");
+			var newUrl = chrome.extension.getURL(oldUrl);
+			extImages[i].setAttribute("src", newUrl);
+		}
+	}
+
+	function updateUrl(){
+		document.getElementById("input_url").value=window.location;
+	}
+
+</script>
