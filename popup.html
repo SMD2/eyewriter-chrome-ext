@@ -22,10 +22,37 @@
       - Policy documentation[1] for details and explanation.
       -
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
+		    
+	-->
     <script src="popup.js"></script>
   </head>
   <body>
+	<table>
+		<tr>
+			<td>
+				<p>Enabled:</p>
+			</td>
+			<td>
+				<input id="isExtEnabled" type="checkbox" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>Click interval (seconds):</p>
+			</td>
+			<td>
+				<input id="clickInterval" type="number" min="0.5" max="30" step="0.5"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>Mobile web view:</p>
+			</td>
+			<td>
+				<input id="useUserAgent" type="checkbox" />
+			</td>
+		</tr>
+	</table>
   </body>
 </html>
 

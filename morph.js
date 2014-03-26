@@ -1,5 +1,14 @@
 var isAlreadyInjected = document.getElementById("ewMenu");
 
+var settings = {};
+//Load Settings
+chrome.storage.local.get("settings", function (result){
+	if (result.settings)
+		settings = result.settings;
+		countTillClick = settings.clickInterval*10;
+});
+
+
 if (!isAlreadyInjected) {
 	// note that it's internal request to chrome extension pages
 	var xmlhttp = new XMLHttpRequest();
@@ -95,9 +104,9 @@ function buttonClick(elm){
 }
 
 var timeoutId;
+var countTillClick=100;
 function myMouseOver(elm, callback, params){
 	var backgroundGraduallyChanger=0;
-	var countTillClick=100;
 	var mouseEventBreaker=false;
 	animateBg(elm, callback, params);
 	
@@ -106,7 +115,7 @@ function myMouseOver(elm, callback, params){
 	    //elm.style.background  = 'hsl(' + backgroundGraduallyChanger + ', 100%, 50%)';
 		var color1 = rgbToHex(backgroundGraduallyChanger/countTillClick*253, 255, 255);
 		var percent = Math.round(backgroundGraduallyChanger/countTillClick*100);
-		var hsla = 'hsla(' + backgroundGraduallyChanger + ', 100%, 50%, 1) ' + percent + "%"
+		var hsla = 'hsla(' + percent + ', 100%, 50%, 1) ' + percent + "%"
 		//(backgroundGraduallyChanger * 1).toString(16);
 		//elm.setAttribute("style", "background: -webkit-gradient(linear,left top,left bottom,from(#" + color1.toString(16) + "),to(#" + (0xffffff-color1).toString(16) + "))!important ");
 		elm.style.setProperty("background", "-webkit-radial-gradient(" + hsla + ", hsla(212, 67%,36%,0) 70%)","important");
@@ -214,7 +223,11 @@ function setFocus(elm){
 }
 
 function tts(txt){
-		chrome.runtime.sendMessage(txt);
+	var request = {
+		op: "tts",
+		tts: txt
+	};
+	chrome.runtime.sendMessage(request);
 }
 
 function loadScript(url, callback){
